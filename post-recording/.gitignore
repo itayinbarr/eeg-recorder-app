@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Output files
+*.edf
+*_band_powers.csv
+*_summary.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,43 @@
+{
+  "name": "eeg-recorder-app",
+  "version": "1.0.0",
+  "description": "Record and analyze EEG data from Muse 2 headset in minutes—no complex software required. Built with web-muse library.",
+  "type": "module",
+  "keywords": [
+    "eeg",
+    "muse",
+    "muse-2",
+    "brain",
+    "neuroscience",
+    "web-bluetooth",
+    "react",
+    "brainwaves",
+    "meditation",
+    "neurofeedback",
+    "biosignal"
+  ],
+  "author": "Itay Inbar",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itayinbarr/eeg-recorder-app"
+  },
+  "bugs": {
+    "url": "https://github.com/itayinbarr/eeg-recorder-app/issues"
+  },
+  "homepage": "https://github.com/itayinbarr/eeg-recorder-app#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.0",
+    "vite-plugin-mkcert": "^1.17.9"
+  }
+}

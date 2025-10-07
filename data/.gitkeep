@@ -1,0 +1,3 @@
+# This file ensures the data directory is tracked by Git
+# Your EEG recordings will be saved here but won't be committed (see .gitignore)
+

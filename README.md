@@ -119,7 +119,6 @@ Get instant results: band powers, clinical ratios, and beautiful visualizations.
 - 🧹 **AutoReject**: Automatic artifact detection and removal
 - 📊 **Power Analysis**: Welch's method PSD with customizable parameters
 - 🎵 **Frequency Bands**: Delta, Theta, Alpha, Beta, Gamma
-- 📈 **Clinical Metrics**: DAR and TAR ratios
 - 🖼️ **Visualizations**: 4-panel summary plots
 - 💾 **Standard Formats**: Export to EDF for use with other tools
 
@@ -385,8 +384,7 @@ All files are saved in the same `data/` folder as your input CSV.
 3. **AutoReject Preprocessing** - Automatically detects and removes bad epochs
 4. **Welch PSD Analysis** - Calculates power spectral density (2s window, 1s overlap)
 5. **Band Power Extraction** - Computes Delta, Theta, Alpha, Beta, Gamma powers
-6. **Clinical Ratios** - Calculates DAR and TAR ratios
-7. **Generates Visualization** - Creates comprehensive 4-panel summary plot
+6. **Generates Visualization** - Creates comprehensive 4-panel summary plot
 
 ### Example Output
 
@@ -495,18 +493,3 @@ ISC License - see LICENSE file for details
 - Built with **[web-muse](https://github.com/itayinbarr/web-muse)** - A modern, actively maintained library for Muse connectivity
 - Powered by **[MNE-Python](https://mne.tools/)** - The leading EEG/MEG analysis library
 - Artifact removal via **[AutoReject](https://autoreject.github.io/)** - Automated quality control for EEG
-
-## 📬 Support
-
-Questions? Ideas? Feedback?
-
-- **Issues**: Open a GitHub issue
-- **Discussions**: Use GitHub Discussions for questions and community support
-- **Web-Muse Library**: For connectivity issues, check the [web-muse repository](https://github.com/itayinbarr/web-muse)
-
----
-
-**Made with ❤️ for the neuroscience and maker communities**
-
-Start exploring your brain activity today! 🧠✨
-# eeg-recorder-app

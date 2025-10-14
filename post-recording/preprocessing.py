@@ -72,12 +72,17 @@ def preprocess_raw(raw, epoch_duration=2.0, baseline=None, apply_ica=False):
     
     print(f"   Created {len(epochs)} epochs")
     
-    # Apply autoreject (adjust parameters for short recordings)
+    # Apply autoreject (adjust parameters for short recordings and channel count)
     n_epochs = len(epochs)
+    n_channels = len(epochs.ch_names)
     
-    if n_epochs < 10:
-        print(f"\n   Note: Only {n_epochs} epochs available. Using simplified rejection.")
-        print("\n4. Applying amplitude-based rejection (too few epochs for AutoReject)...")
+    # Skip AutoReject for 2-channel data (interpolation would make channels too similar)
+    if n_epochs < 10 or n_channels <= 2:
+        if n_epochs < 10:
+            print(f"\n   Note: Only {n_epochs} epochs available. Using simplified rejection.")
+        if n_channels <= 2:
+            print(f"\n   Note: Only {n_channels} channels available. Skipping AutoReject (interpolation would corrupt data).")
+        print("\n4. Applying amplitude-based rejection...")
         
         # Use simple peak-to-peak rejection for short recordings
         reject_criteria = get_rejection_threshold(epochs, ch_types='eeg')
@@ -102,8 +107,15 @@ def preprocess_raw(raw, epoch_duration=2.0, baseline=None, apply_ica=False):
         # Adjust CV folds based on number of epochs
         cv_folds = min(5, n_epochs // 2)
         
+        # Limit n_interpolate to n_channels - 1 (can't interpolate all channels!)
+        n_channels = len(epochs.ch_names)
+        max_interpolate = n_channels - 1
+        n_interpolate_options = [i for i in [1, 2, 3, 4] if i <= max_interpolate]
+        print(f"   Using {n_channels} channels, max interpolation: {max_interpolate}")
+        print(f"   Interpolation options: {n_interpolate_options}")
+        
         ar = AutoReject(
-            n_interpolate=[1, 2, 3, 4],  # Number of channels to interpolate
+            n_interpolate=n_interpolate_options,  # Number of channels to interpolate
             cv=cv_folds,  # Adjust cross-validation folds
             random_state=42,
             n_jobs=1,

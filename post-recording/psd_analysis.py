@@ -147,7 +147,7 @@ def compute_band_powers(psds, freqs, bands=None):
     return band_powers
 
 
-def compute_ratios(band_powers):
+def compute_ratios(band_powers, channel_names=None):
     """
     Compute DAR (Delta/Alpha Ratio) and TAR (Theta/Alpha Ratio).
     
@@ -155,6 +155,8 @@ def compute_ratios(band_powers):
     ----------
     band_powers : dict
         Dictionary of band powers from compute_band_powers
+    channel_names : list, optional
+        List of channel names for per-electrode reporting
     
     Returns
     -------
@@ -181,14 +183,28 @@ def compute_ratios(band_powers):
     }
     
     print(f"\nDAR (Delta/Alpha Ratio):")
-    print(f"  Mean: {np.mean(dar):.3f}")
-    print(f"  Std: {np.std(dar):.3f}")
-    print(f"  Range: [{np.min(dar):.3f}, {np.max(dar):.3f}]")
+    print(f"  Overall Mean: {np.mean(dar):.3f}")
+    print(f"  Overall Std: {np.std(dar):.3f}")
+    print(f"  Overall Range: [{np.min(dar):.3f}, {np.max(dar):.3f}]")
+    
+    # Per-electrode statistics
+    if channel_names is not None and len(channel_names) == dar.shape[1]:
+        print(f"\n  Per-electrode DAR:")
+        for i, ch_name in enumerate(channel_names):
+            ch_dar = dar[:, i]
+            print(f"    {ch_name}: {np.mean(ch_dar):.3f} ± {np.std(ch_dar):.3f} (range: {np.min(ch_dar):.3f}-{np.max(ch_dar):.3f})")
     
     print(f"\nTAR (Theta/Alpha Ratio):")
-    print(f"  Mean: {np.mean(tar):.3f}")
-    print(f"  Std: {np.std(tar):.3f}")
-    print(f"  Range: [{np.min(tar):.3f}, {np.max(tar):.3f}]")
+    print(f"  Overall Mean: {np.mean(tar):.3f}")
+    print(f"  Overall Std: {np.std(tar):.3f}")
+    print(f"  Overall Range: [{np.min(tar):.3f}, {np.max(tar):.3f}]")
+    
+    # Per-electrode statistics
+    if channel_names is not None and len(channel_names) == tar.shape[1]:
+        print(f"\n  Per-electrode TAR:")
+        for i, ch_name in enumerate(channel_names):
+            ch_tar = tar[:, i]
+            print(f"    {ch_name}: {np.mean(ch_tar):.3f} ± {np.std(ch_tar):.3f} (range: {np.min(ch_tar):.3f}-{np.max(ch_tar):.3f})")
     
     print("\n✓ Ratio computation complete!")
     print("=" * 60)

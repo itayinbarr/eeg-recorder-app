@@ -39,12 +39,12 @@ python process_eeg.py ../data/eeg_recording_2025-10-07T22-30-47.csv
 
 This will:
 
-1. Convert CSV to EDF format
-2. Apply preprocessing with autoreject
+1. Convert CSV to EDF format (extracts AF7 and AF8 frontal electrodes only)
+2. Apply preprocessing with artifact rejection (skips AutoReject for 2-channel data)
 3. Compute PSD using Welch's method (2s window, 1s overlap)
-4. Calculate band powers for all frequency bands
-5. Calculate DAR and TAR ratios
-6. Save results to CSV files
+4. Calculate band powers for all frequency bands (Delta, Theta, Alpha, Beta, Gamma)
+5. Calculate DAR and TAR ratios (per-electrode and averaged across AF7 and AF8 only)
+6. Save results to CSV files and generate summary plots
 
 ### Specify Output Directory
 

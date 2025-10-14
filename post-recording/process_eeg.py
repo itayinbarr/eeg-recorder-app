@@ -128,7 +128,10 @@ def process_eeg_recording(input_csv, output_dir=None):
     print("STEP 5: Computing Power Ratios (DAR, TAR)")
     print(">" * 70)
     
-    ratios = compute_ratios(band_powers)
+    # Get channel names for per-electrode reporting
+    channel_names = epochs_clean.ch_names
+    print(f"\nAnalyzing {len(channel_names)} channels: {channel_names}")
+    ratios = compute_ratios(band_powers, channel_names)
     
     # Step 6: Create visualization
     print("\n" + ">" * 70)
@@ -188,6 +191,15 @@ def process_eeg_recording(input_csv, output_dir=None):
     print(f"\nPower Ratios (averaged across epochs and channels):")
     print(f"  DAR (Delta/Alpha): {df['DAR'].mean():.3f} ± {df['DAR'].std():.3f}")
     print(f"  TAR (Theta/Alpha): {df['TAR'].mean():.3f} ± {df['TAR'].std():.3f}")
+    
+    # Per-electrode ratios
+    if 'channel' in df.columns:
+        print(f"\nPer-electrode Power Ratios:")
+        for ch in df['channel'].unique():
+            ch_data = df[df['channel'] == ch]
+            print(f"  {ch}:")
+            print(f"    DAR: {ch_data['DAR'].mean():.3f} ± {ch_data['DAR'].std():.3f}")
+            print(f"    TAR: {ch_data['TAR'].mean():.3f} ± {ch_data['TAR'].std():.3f}")
     
     print("\n" + "=" * 70)
     print("✓ PROCESSING COMPLETE!")

@@ -37,9 +37,9 @@ def preprocess_raw(raw, epoch_duration=2.0, baseline=None, apply_ica=False):
     print("PREPROCESSING PIPELINE")
     print("=" * 60)
     
-    # Apply bandpass filter (0.5-40 Hz for EEG)
-    print("\n1. Applying bandpass filter (0.5-40 Hz)...")
-    raw.filter(l_freq=0.5, h_freq=40.0, fir_design='firwin')
+    # Apply bandpass filter (1.0-40 Hz for EEG)
+    print("\n1. Applying bandpass filter (1.0-40 Hz)...")
+    raw.filter(l_freq=1.0, h_freq=40.0, fir_design='firwin')
     
     # Optional ICA for artifact removal
     if apply_ica:

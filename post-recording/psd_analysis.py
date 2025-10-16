@@ -10,7 +10,7 @@ from scipy import signal
 
 # Frequency bands definition
 FREQ_BANDS = {
-    'delta': (0.5, 4),
+    'delta': (1, 4),
     'theta': (4, 8),
     'alpha': (8, 13),
     'beta': (13, 30),

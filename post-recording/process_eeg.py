@@ -11,10 +11,10 @@ This script processes CSV EEG recordings through the complete pipeline:
 6. Save results to CSV
 
 Usage:
-    python process_eeg.py <input_csv> [output_dir]
+    python process_eeg.py <input_csv> [output_dir] [--seconds N]
     
 Example:
-    python process_eeg.py ../data/eeg_recording.csv ../data/results/
+    python process_eeg.py ../data/eeg_recording.csv ../data/results/ --seconds 60
 """
 
 import argparse
@@ -33,7 +33,7 @@ from psd_analysis import (
 from visualization import create_processing_summary_plot, compute_raw_psd
 
 
-def process_eeg_recording(input_csv, output_dir=None):
+def process_eeg_recording(input_csv, output_dir=None, seconds=None):
     """
     Process a single EEG recording through the complete pipeline.
     
@@ -43,6 +43,9 @@ def process_eeg_recording(input_csv, output_dir=None):
         Path to the input CSV file
     output_dir : str or Path, optional
         Directory for output files. If None, uses same directory as input.
+    seconds : float, optional
+        If provided, only the first N seconds of the recording will be used
+        for PSD, band power calculations, and DAR/TAR ratios.
     
     Returns
     -------
@@ -80,6 +83,18 @@ def process_eeg_recording(input_csv, output_dir=None):
     edf_path = output_dir / f"{base_name}.edf"
     raw = csv_to_edf(input_csv, edf_path)
     results['edf_file'] = str(edf_path)
+    
+    # If requested, limit to the first N seconds of data for all downstream analyses
+    if seconds is not None:
+        if seconds <= 0:
+            raise ValueError("seconds must be greater than 0")
+        try:
+            total_duration_sec = float(raw.times[-1])
+        except Exception:
+            total_duration_sec = float(raw.n_times) / float(raw.info['sfreq'])
+        tmax = min(float(seconds), total_duration_sec)
+        print(f"\nLimiting analysis to first {tmax:.2f}s out of {total_duration_sec:.2f}s")
+        raw.crop(tmin=0.0, tmax=tmax)
     
     # Keep original for visualization
     raw_original = raw.copy()
@@ -234,6 +249,13 @@ Examples:
         help='Output directory (default: same as input file)'
     )
     
+    parser.add_argument(
+        '--seconds',
+        type=float,
+        default=None,
+        help='If set, use only the first N seconds of the recording'
+    )
+    
     args = parser.parse_args()
     
     # Check if input file exists
@@ -248,7 +270,7 @@ Examples:
     
     # Process the recording
     try:
-        results = process_eeg_recording(args.input_csv, args.output_dir)
+        results = process_eeg_recording(args.input_csv, args.output_dir, args.seconds)
     except Exception as e:
         print(f"\n❌ Error during processing: {e}")
         import traceback

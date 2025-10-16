@@ -380,7 +380,7 @@ All files are saved in the same `data/` folder as your input CSV.
 ### What the Pipeline Does
 
 1. **Converts CSV to EDF** - Standard format compatible with other EEG tools
-2. **Applies Bandpass Filter** - 0.5-40 Hz to remove noise
+2. **Applies Bandpass Filter** - 1.0-40 Hz to remove noise
 3. **AutoReject Preprocessing** - Automatically detects and removes bad epochs
 4. **Welch PSD Analysis** - Calculates power spectral density (2s window, 1s overlap)
 5. **Band Power Extraction** - Computes Delta, Theta, Alpha, Beta, Gamma powers

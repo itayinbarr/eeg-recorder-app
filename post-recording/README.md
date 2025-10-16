@@ -61,7 +61,7 @@ The pipeline generates the following files:
 
    - `epoch`: Epoch number
    - `channel`: Channel name (AF7, AF8 - frontal electrodes only)
-   - `delta_power`: Delta band power (0.5-4 Hz)
+   - `delta_power`: Delta band power (1.0-4 Hz)
    - `theta_power`: Theta band power (4-8 Hz)
    - `alpha_power`: Alpha band power (8-13 Hz)
    - `beta_power`: Beta band power (13-30 Hz)
@@ -74,7 +74,7 @@ The pipeline generates the following files:
 4. **`<filename>_summary_plot.png`**: 4-subplot visualization showing:
 
    - Raw EEG signal (AF7, AF8 frontal electrodes on same scale)
-   - Filtered EEG (after bandpass 0.5-50 Hz)
+   - Filtered EEG (after bandpass 1.0-50 Hz)
    - PSD before artifact removal
    - PSD after cleaning with frequency bands highlighted
 
@@ -116,11 +116,11 @@ This will process all `eeg_recording_*.csv` files in the directory.
 
 - **Window length**: 2 seconds (512 samples at 256 Hz)
 - **Overlap**: 1 second (256 samples)
-- **Frequency range**: 0.5-40 Hz
+- **Frequency range**: 1.0-40 Hz
 
 ### Frequency Bands
 
-- **Delta**: 0.5-4 Hz
+- **Delta**: 1.0-4 Hz
 - **Theta**: 4-8 Hz
 - **Alpha**: 8-13 Hz
 - **Beta**: 13-30 Hz
@@ -128,7 +128,7 @@ This will process all `eeg_recording_*.csv` files in the directory.
 
 ### Preprocessing
 
-- **Bandpass filter**: 0.5-40 Hz
+- **Bandpass filter**: 1.0-40 Hz
 - **Epoch duration**: 2 seconds
 - **AutoReject**: Automatic bad channel interpolation and epoch rejection
 - **Amplitude threshold**: Automatic calculation based on data distribution

@@ -50,7 +50,7 @@ def create_processing_summary_plot(raw_original, raw_filtered, epochs_clean,
     # Subplot 2: Cleaned EEG after bandpass filtering
     ax2 = axes[0, 1]
     plot_eeg_timeseries(raw_filtered, ax2, colors,
-                       title='2. After Bandpass Filter (0.5-40 Hz)',
+                       title='2. After Bandpass Filter (1.0-40 Hz)',
                        ylabel='Amplitude (µV)')
     
     # Subplot 3: PSD before cleaning
